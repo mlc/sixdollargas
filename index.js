@@ -39,7 +39,8 @@ const getOldPrice = () =>
     .promise()
     .then(
       ({ Body }) => Body.toString(),
-      ({ code }) => {
+      e => {
+        const { code } = e;
         if (code === 'NoSuchKey') {
           return '';
         }
