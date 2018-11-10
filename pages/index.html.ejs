@@ -3,15 +3,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
  <head>
   <title>six dollar gas party</title>
-  <link rel="stylesheet" href="style.css" type="text/css" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="alternate" href="feed.atom" type="application/atom+xml" />
+  <style type="text/css">
+    #lbox { float:left; padding-right: 1em; }
+    #content { width: 700px; margin-left: auto; margin-right: auto; border: 1px solid black; padding: 1ex; min-height: 345px; }
+  </style>
  </head>
  <body>
   <div id="content">
    <div id="lbox"><img src="bp.jpg" width="194" height="345" alt="" /></div>
    <h1>six dollar gas party</h1>
-   <p>I'm throwing a party when gas prices in the US reach $6 per gallon (approx €1.50/L).</p>
+   <p>I'm throwing a party when gas prices in the US reach $6 per gallon (approx <%= price %>/L).</p>
    <p>Details to follow at the appropriate time.</p>
   </div>
  </body>

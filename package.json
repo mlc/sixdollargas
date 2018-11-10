@@ -1,0 +1,26 @@
+{
+  "name": "sixdollargas",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "mike castleman <m@mlcastle.net>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "aws-sdk": "^2.353.0",
+    "ejs": "^2.6.1",
+    "js-joda": "^1.9.2",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.5",
+    "sprintf-js": "^1.1.1",
+    "xmldom": "^0.1.27",
+    "xpath": "^0.0.27"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.5",
+    "@babel/node": "^7.0.0",
+    "@babel/preset-env": "^7.1.5",
+    "prettier": "^1.15.2",
+    "pretty-quick": "^1.8.0"
+  }
+}
