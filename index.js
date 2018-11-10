@@ -111,8 +111,14 @@ export const main = async () => {
     .promise();
 };
 
-export const handler = () =>
-  main().then(console.log, e => {
-    console.error(e);
-    process.exit(1);
-  });
+export const handler = (event, context, callback) =>
+  main().then(
+    message => {
+      console.log(message);
+      callback(null, 1);
+    },
+    e => {
+      console.error(e);
+      callback(e);
+    }
+  );
