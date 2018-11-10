@@ -73,7 +73,7 @@ const putPrice = price =>
     })
     .promise();
 
-(async () => {
+export const main = async () => {
   const [price, oldPrice, index, feed] = await Promise.all([
     getPrice(),
     getOldPrice(),
@@ -109,7 +109,10 @@ const putPrice = price =>
       },
     })
     .promise();
-})().then(console.log, e => {
-  console.error(e);
-  process.exit(1);
-});
+};
+
+export const handler = () =>
+  main().then(console.log, e => {
+    console.error(e);
+    process.exit(1);
+  });
