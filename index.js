@@ -1,5 +1,6 @@
+import 'source-map-support/register';
+
 import AWS from 'aws-sdk';
-import * as ejs from 'ejs';
 import * as fs from 'fs';
 import { ZonedDateTime } from 'js-joda';
 import rp from 'request-promise-native';
@@ -7,6 +8,9 @@ import { sprintf } from 'sprintf-js';
 import { promisify } from 'util';
 import { DOMParser } from 'xmldom';
 import * as xpath from 'xpath';
+
+const index = require('ejs-compiled-loader!./pages/index.html.ejs');
+const feed = require('ejs-compiled-loader!./pages/feed.atom.ejs');
 
 const Bucket = 'sixdollargas.org';
 const PRICE_KEY = 'price';
@@ -48,11 +52,6 @@ const getOldPrice = () =>
       }
     );
 
-const loadTemplate = filename =>
-  readFile(`pages/${filename}`, 'utf-8').then(str =>
-    ejs.compile(str, { filename })
-  );
-
 const upload = (template, locals, Key, ContentType) =>
   s3
     .putObject({
@@ -75,22 +74,18 @@ const putPrice = price =>
     .promise();
 
 export const main = async () => {
-  const [price, oldPrice, index, feed] = await Promise.all([
-    getPrice(),
-    getOldPrice(),
-    loadTemplate('index.html.ejs'),
-    loadTemplate('feed.atom.ejs'),
-  ]);
+  const [price, oldPrice] = await Promise.all([getPrice(), getOldPrice()]);
+
+  if (price === oldPrice) {
+    return `keeping ${price}, no update needed`;
+  }
+
   const locals = {
     now: ZonedDateTime.now()
       .withFixedOffsetZone()
       .toString(),
     price,
   };
-
-  if (price === oldPrice) {
-    return `keeping ${price}, no update needed`;
-  }
 
   await Promise.all([
     upload(index, locals, 'index.html', 'application/xhtml+xml;charset=utf-8'),
