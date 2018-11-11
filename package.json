@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "mike castleman <m@mlcastle.net>",
-  "license": "MIT",
+  "scripts": {
+    "build": "webpack --config webpack.config.js --mode production"
+  },
   "private": true,
   "dependencies": {
     "aws-sdk": "^2.353.0",
