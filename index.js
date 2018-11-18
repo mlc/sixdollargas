@@ -2,7 +2,7 @@ import 'source-map-support/register';
 
 import AWS from 'aws-sdk';
 import * as fs from 'fs';
-import { ZonedDateTime } from 'js-joda';
+import { convert, ZonedDateTime } from 'js-joda';
 import rp from 'request-promise-native';
 import { sprintf } from 'sprintf-js';
 import { promisify } from 'util';
@@ -13,15 +13,29 @@ const index = require('ejs-compiled-loader!./pages/index.html.ejs');
 const feed = require('ejs-compiled-loader!./pages/feed.atom.ejs');
 
 const Bucket = 'sixdollargas.org';
+const CacheControl = 'public,max-age=86400';
 const PRICE_KEY = 'price';
 const LITERS_PER_GALLON = 3.785411784;
 const readFile = promisify(fs.readFile);
-const cloudfront = new AWS.CloudFront({ apiVersion: '2018-06-18' });
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
 const select = xpath.useNamespaces({
   ecb: 'http://www.ecb.int/vocabulary/2002-08-01/eurofxref',
 });
+
+const files = [
+  {
+    Key: 'index.html',
+    transformer: index,
+    ContentType: 'application/xhtml+xml;charset=utf-8',
+  },
+  { Key: 'feed.atom', transformer: feed, ContentType: 'application/atom+xml' },
+  {
+    Key: 'price',
+    transformer: ({ price }) => price,
+    ContentType: 'text/plain;charset=utf-8',
+  },
+];
 
 const getPrice = () =>
   rp
@@ -52,59 +66,49 @@ const getOldPrice = () =>
       }
     );
 
-const upload = (template, locals, Key, ContentType) =>
+const upload = (locals, { transformer, Key, ContentType }) =>
   s3
     .putObject({
       Bucket,
       Key,
-      Body: Buffer.from(template(locals), 'utf-8'),
-      CacheControl: 'public,max-age=86400',
+      Body: Buffer.from(transformer(locals), 'utf-8'),
+      CacheControl,
       ContentType,
+      Expires: locals.Expires,
     })
     .promise();
 
-const putPrice = price =>
+const updateExpiry = ({ Expires }, { Key, ContentType }) =>
   s3
-    .putObject({
+    .copyObject({
       Bucket,
-      Key: PRICE_KEY,
-      Body: Buffer.from(price, 'utf-8'),
-      ContentType: 'text/plain;charset=utf-8',
+      Key,
+      CopySource: `${Bucket}/${Key}`,
+      CacheControl,
+      ContentType,
+      Expires,
+      MetadataDirective: 'REPLACE',
     })
     .promise();
 
 export const main = async () => {
+  const now = ZonedDateTime.now();
+
   const [price, oldPrice] = await Promise.all([getPrice(), getOldPrice()]);
 
-  if (price === oldPrice) {
-    return `keeping ${price}, no update needed`;
-  }
-
   const locals = {
-    now: ZonedDateTime.now()
-      .withFixedOffsetZone()
-      .toString(),
+    now: now.withFixedOffsetZone().toString(),
     price,
+    Expires: convert(now.plusHours(24)).toDate(),
   };
 
-  await Promise.all([
-    upload(index, locals, 'index.html', 'application/xhtml+xml;charset=utf-8'),
-    upload(feed, locals, 'feed.atom', 'application/atom+xml'),
-    putPrice(price),
-  ]);
+  const [op, message] =
+    price === oldPrice
+      ? [updateExpiry, `keeping price at ${price}`]
+      : [upload, `setting price to ${price}`];
 
-  return cloudfront
-    .createInvalidation({
-      DistributionId: 'E1BA415AXD033P',
-      InvalidationBatch: {
-        CallerReference: locals.now,
-        Paths: {
-          Quantity: 3,
-          Items: ['/', '/index.html', '/feed.atom'],
-        },
-      },
-    })
-    .promise();
+  await Promise.all(files.map(file => op(locals, file)));
+  return message;
 };
 
 export const handler = (event, context, callback) =>
