@@ -2,7 +2,8 @@ import 'source-map-support/register';
 
 import AWS from 'aws-sdk';
 import * as fs from 'fs';
-import { convert, ZonedDateTime } from 'js-joda';
+import { convert, ZonedDateTime, ZoneId } from 'js-joda';
+import 'js-joda-timezone';
 import rp from 'request-promise-native';
 import { sprintf } from 'sprintf-js';
 import { promisify } from 'util';
@@ -16,6 +17,7 @@ const Bucket = 'sixdollargas.org';
 const CacheControl = 'public,max-age=86400';
 const PRICE_KEY = 'price';
 const LITERS_PER_GALLON = 3.785411784;
+const TZ = ZoneId.of('America/New_York');
 const readFile = promisify(fs.readFile);
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
@@ -92,7 +94,7 @@ const updateExpiry = ({ Expires }, { Key, ContentType }) =>
     .promise();
 
 export const main = async () => {
-  const now = ZonedDateTime.now();
+  const now = ZonedDateTime.now(TZ);
 
   const [price, oldPrice] = await Promise.all([getPrice(), getOldPrice()]);
 

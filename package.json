@@ -10,6 +10,7 @@
   "dependencies": {
     "aws-sdk": "^2.353.0",
     "js-joda": "^1.9.2",
+    "js-joda-timezone": "^2.0.1",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
     "source-map-support": "^0.5.9",
