@@ -114,13 +114,7 @@ export const main = async () => {
 };
 
 export const handler = (event, context, callback) =>
-  main().then(
-    message => {
-      console.log(message);
-      callback(null, 1);
-    },
-    e => {
-      console.error(e);
-      callback(e);
-    }
-  );
+  main().then(message => {
+    console.log(message);
+    return 1;
+  });
