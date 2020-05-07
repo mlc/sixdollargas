@@ -18,6 +18,12 @@ module.exports = {
           loader: 'babel-loader',
         },
       },
+      {
+        test: /\.ejs$/,
+        use: {
+          loader: 'ejs-webpack-loader',
+        },
+      },
     ],
   },
   target: 'node',

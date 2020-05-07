@@ -10,8 +10,8 @@ import { promisify } from 'util';
 import { DOMParser } from 'xmldom';
 import * as xpath from 'xpath';
 
-const index = require('ejs-compiled-loader!./pages/index.html.ejs');
-const feed = require('ejs-compiled-loader!./pages/feed.atom.ejs');
+const index = require('./pages/index.html.ejs');
+const feed = require('./pages/feed.atom.ejs');
 
 const Bucket = 'sixdollargas.org';
 const CacheControl = 'public,max-age=86400';
