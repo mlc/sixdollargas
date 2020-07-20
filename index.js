@@ -14,7 +14,7 @@ const index = require('./pages/index.html.ejs');
 const feed = require('./pages/feed.atom.ejs');
 
 const Bucket = 'sixdollargas.org';
-const CacheControl = 'public,max-age=86400';
+const CacheControl = 'public';
 const PRICE_KEY = 'price';
 const LITERS_PER_GALLON = 3.785411784;
 const TZ = ZoneId.of('America/New_York');
