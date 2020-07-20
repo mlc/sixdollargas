@@ -4,7 +4,7 @@ import AWS from 'aws-sdk';
 import * as fs from 'fs';
 import { convert, ZonedDateTime, ZoneId } from 'js-joda';
 import 'js-joda-timezone';
-import rp from 'request-promise-native';
+import fetch from 'node-fetch';
 import { sprintf } from 'sprintf-js';
 import { promisify } from 'util';
 import { DOMParser } from 'xmldom';
@@ -40,11 +40,9 @@ const files = [
 ];
 
 const getPrice = () =>
-  rp
-    .get('https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml', {
-      transform: body => new DOMParser().parseFromString(body),
-      transform2xxOnly: true,
-    })
+  fetch('https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml')
+    .then(r => r.text())
+    .then(body => new DOMParser().parseFromString(body))
     .then(xml => select('//ecb:Cube[@currency="USD"]/@rate', xml, true).value)
     .then(Number)
     .then(eurPerDollar => 6 / (LITERS_PER_GALLON * eurPerDollar))
