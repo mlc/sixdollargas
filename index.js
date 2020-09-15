@@ -15,11 +15,14 @@ const feed = require('./pages/feed.atom.ejs');
 
 const Bucket = 'sixdollargas.org';
 const CacheControl = 'public';
+const TableName = 'gas-price-history';
 const PRICE_KEY = 'price';
 const LITERS_PER_GALLON = 3.785411784;
 const TZ = ZoneId.of('America/New_York');
 const readFile = promisify(fs.readFile);
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+const dynamo = new AWS.DynamoDB({ apiVersion: '2012-08-10' });
+const dbClient = new AWS.DynamoDB.DocumentClient({ service: dynamo });
 
 const select = xpath.useNamespaces({
   ecb: 'http://www.ecb.int/vocabulary/2002-08-01/eurofxref',
@@ -91,6 +94,17 @@ const updateExpiry = ({ Expires }, { Key, ContentType }) =>
     })
     .promise();
 
+const storeInDb = ({ now, price }) =>
+  dbClient
+    .put({
+      TableName,
+      Item: {
+        date: now,
+        price: Number(price.substr(1)),
+      },
+    })
+    .promise();
+
 export const main = async () => {
   const now = ZonedDateTime.now(TZ);
 
@@ -107,7 +121,10 @@ export const main = async () => {
       ? [updateExpiry, `keeping price at ${price}`]
       : [upload, `setting price to ${price}`];
 
-  await Promise.all(files.map(file => op(locals, file)));
+  await Promise.all([
+    ...files.map(file => op(locals, file)),
+    storeInDb(locals),
+  ]);
   return message;
 };
 
