@@ -27,5 +27,7 @@ module.exports = {
     ],
   },
   target: 'node',
+  externals: ['aws-sdk'],
   devtool: 'source-map',
+  optimization: { minimize: false },
 };
