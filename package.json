@@ -9,10 +9,10 @@
   "private": true,
   "dependencies": {
     "@babel/runtime": "^7.10.5",
+    "@js-joda/core": "^3.1.0",
+    "@js-joda/timezone": "^2.3.0",
     "aws-sdk": "^2.353.0",
     "ejs-webpack-loader": "^2.2.2",
-    "js-joda": "^1.9.2",
-    "js-joda-timezone": "^2.0.1",
     "node-fetch": "^2.6.1",
     "source-map-support": "^0.5.9",
     "sprintf-js": "^1.1.1",

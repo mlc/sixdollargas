@@ -2,8 +2,8 @@ import 'source-map-support/register';
 
 import AWS from 'aws-sdk';
 import * as fs from 'fs';
-import { convert, ZonedDateTime, ZoneId } from 'js-joda';
-import 'js-joda-timezone';
+import { convert, ZonedDateTime, ZoneId } from '@js-joda/core';
+import '@js-joda/timezone/dist/js-joda-timezone-10-year-range';
 import fetch from 'node-fetch';
 import { sprintf } from 'sprintf-js';
 import { promisify } from 'util';
