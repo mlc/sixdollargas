@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
   context: __dirname,
-  entry: './index.js',
+  entry: './index.ts',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'index.js',
@@ -13,7 +13,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.[tj]sx?$/,
         use: {
           loader: 'babel-loader',
         },

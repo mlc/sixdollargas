@@ -1,17 +1,16 @@
 import 'source-map-support/register';
 
-import AWS from 'aws-sdk';
-import * as fs from 'fs';
+import * as AWS from 'aws-sdk';
+import { TemplateFunction } from 'ejs';
 import { convert, ZonedDateTime, ZoneId } from '@js-joda/core';
 import '@js-joda/timezone/dist/js-joda-timezone-10-year-range';
 import fetch from 'node-fetch';
 import { sprintf } from 'sprintf-js';
-import { promisify } from 'util';
 import { DOMParser } from 'xmldom';
 import * as xpath from 'xpath';
 
-const index = require('./pages/index.html.ejs');
-const feed = require('./pages/feed.atom.ejs');
+const index: TemplateFunction = require('./pages/index.html.ejs');
+const feed: TemplateFunction = require('./pages/feed.atom.ejs');
 
 const Bucket = 'sixdollargas.org';
 const CacheControl = 'public';
@@ -19,7 +18,6 @@ const TableName = 'gas-price-history';
 const PRICE_KEY = 'price';
 const LITERS_PER_GALLON = 3.785411784;
 const TZ = ZoneId.of('America/New_York');
-const readFile = promisify(fs.readFile);
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 const dynamo = new AWS.DynamoDB({ apiVersion: '2012-08-10' });
 const dbClient = new AWS.DynamoDB.DocumentClient({ service: dynamo });
@@ -28,13 +26,29 @@ const select = xpath.useNamespaces({
   ecb: 'http://www.ecb.int/vocabulary/2002-08-01/eurofxref',
 });
 
-const files = [
+interface Locals {
+  now: string;
+  price: string;
+  Expires: Date;
+}
+
+interface FileDescription {
+  Key: string;
+  transformer: (locals: Locals) => string;
+  ContentType: string;
+}
+
+const files: readonly FileDescription[] = [
   {
     Key: 'index.html',
     transformer: index,
     ContentType: 'application/xhtml+xml;charset=utf-8',
   },
-  { Key: 'feed.atom', transformer: feed, ContentType: 'application/atom+xml' },
+  {
+    Key: 'feed.atom',
+    transformer: feed,
+    ContentType: 'application/atom+xml',
+  },
   {
     Key: 'price',
     transformer: ({ price }) => price,
@@ -42,16 +56,19 @@ const files = [
   },
 ];
 
-const getPrice = () =>
-  fetch('https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml')
-    .then(r => r.text())
-    .then(body => new DOMParser().parseFromString(body))
-    .then(xml => select('//ecb:Cube[@currency="USD"]/@rate', xml, true).value)
-    .then(Number)
-    .then(eurPerDollar => 6 / (LITERS_PER_GALLON * eurPerDollar))
-    .then(price => sprintf('€%0.2f', price));
+const getPrice = async (): Promise<string> => {
+  const r = await fetch(
+    'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml'
+  );
+  const body = await r.text();
+  const xml = new DOMParser().parseFromString(body);
+  const rate = select('//ecb:Cube[@currency="USD"]/@rate', xml, true) as Attr;
+  const eurPerDollar = parseFloat(rate.value);
+  const price = 6 / (LITERS_PER_GALLON * eurPerDollar);
+  return sprintf('€%0.2f', price);
+};
 
-const getOldPrice = () =>
+const getOldPrice = (): Promise<string> =>
   s3
     .getObject({
       Bucket,
@@ -59,8 +76,8 @@ const getOldPrice = () =>
     })
     .promise()
     .then(
-      ({ Body }) => Body.toString(),
-      e => {
+      ({ Body }) => (Body as Buffer).toString(),
+      (e) => {
         const { code } = e;
         if (code === 'NoSuchKey') {
           return '';
@@ -69,7 +86,12 @@ const getOldPrice = () =>
       }
     );
 
-const upload = (locals, { transformer, Key, ContentType }) =>
+type FileHandler<T = unknown> = (
+  locals: Locals,
+  fileDescription: FileDescription
+) => Promise<T>;
+
+const upload: FileHandler = (locals, { transformer, Key, ContentType }) =>
   s3
     .putObject({
       Bucket,
@@ -81,7 +103,7 @@ const upload = (locals, { transformer, Key, ContentType }) =>
     })
     .promise();
 
-const updateExpiry = ({ Expires }, { Key, ContentType }) =>
+const updateExpiry: FileHandler = ({ Expires }, { Key, ContentType }) =>
   s3
     .copyObject({
       Bucket,
@@ -94,7 +116,7 @@ const updateExpiry = ({ Expires }, { Key, ContentType }) =>
     })
     .promise();
 
-const storeInDb = ({ now, price }) =>
+const storeInDb = ({ now, price }: Locals): Promise<any> =>
   dbClient
     .put({
       TableName,
@@ -105,12 +127,12 @@ const storeInDb = ({ now, price }) =>
     })
     .promise();
 
-export const main = async () => {
+export const main = async (): Promise<string> => {
   const now = ZonedDateTime.now(TZ);
 
   const [price, oldPrice] = await Promise.all([getPrice(), getOldPrice()]);
 
-  const locals = {
+  const locals: Locals = {
     now: now.withFixedOffsetZone().toString(),
     price,
     Expires: convert(now.plusHours(24)).toDate(),
@@ -122,14 +144,11 @@ export const main = async () => {
       : [upload, `setting price to ${price}`];
 
   await Promise.all([
-    ...files.map(file => op(locals, file)),
+    ...files.map((file) => op(locals, file)),
     storeInDb(locals),
   ]);
   return message;
 };
 
-export const handler = (event, context, callback) =>
-  main().then(message => {
-    console.log(message);
-    return 1;
-  });
+export const handler: AWSLambda.ScheduledHandler = () =>
+  main().then(console.log);
