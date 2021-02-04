@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 
 module.exports = {
   context: __dirname,
@@ -25,6 +24,9 @@ module.exports = {
         },
       },
     ],
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
   },
   target: 'node',
   externals: ['aws-sdk'],

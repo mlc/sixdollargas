@@ -1,6 +1,6 @@
 import 'source-map-support/register';
 
-import * as AWS from 'aws-sdk';
+import { ScheduledHandler } from 'aws-lambda';
 import { TemplateFunction } from 'ejs';
 import { convert, ZonedDateTime, ZoneId } from '@js-joda/core';
 import '@js-joda/timezone/dist/js-joda-timezone-10-year-range';
@@ -8,6 +8,8 @@ import fetch from 'node-fetch';
 import { sprintf } from 'sprintf-js';
 import { DOMParser } from 'xmldom';
 import * as xpath from 'xpath';
+
+import { s3, dynamo } from './aws';
 
 const index: TemplateFunction = require('./pages/index.html.ejs');
 const feed: TemplateFunction = require('./pages/feed.atom.ejs');
@@ -18,9 +20,6 @@ const TableName = 'gas-price-history';
 const PRICE_KEY = 'price';
 const LITERS_PER_GALLON = 3.785411784;
 const TZ = ZoneId.of('America/New_York');
-const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
-const dynamo = new AWS.DynamoDB({ apiVersion: '2012-08-10' });
-const dbClient = new AWS.DynamoDB.DocumentClient({ service: dynamo });
 
 const select = xpath.useNamespaces({
   ecb: 'http://www.ecb.int/vocabulary/2002-08-01/eurofxref',
@@ -50,7 +49,7 @@ const files: readonly FileDescription[] = [
     ContentType: 'application/atom+xml',
   },
   {
-    Key: 'price',
+    Key: PRICE_KEY,
     transformer: ({ price }) => price,
     ContentType: 'text/plain;charset=utf-8',
   },
@@ -117,12 +116,12 @@ const updateExpiry: FileHandler = ({ Expires }, { Key, ContentType }) =>
     .promise();
 
 const storeInDb = ({ now, price }: Locals): Promise<any> =>
-  dbClient
-    .put({
+  dynamo
+    .putItem({
       TableName,
       Item: {
-        date: now,
-        price: Number(price.substr(1)),
+        date: { S: now },
+        price: { N: price.substr(1) },
       },
     })
     .promise();
@@ -150,5 +149,4 @@ export const main = async (): Promise<string> => {
   return message;
 };
 
-export const handler: AWSLambda.ScheduledHandler = () =>
-  main().then(console.log);
+export const handler: ScheduledHandler = () => main().then(console.log);
