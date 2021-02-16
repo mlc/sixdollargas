@@ -1,25 +1,23 @@
-import 'source-map-support/register';
-
 import { ScheduledHandler } from 'aws-lambda';
 import { TemplateFunction } from 'ejs';
 import { convert, ZonedDateTime, ZoneId } from '@js-joda/core';
-import '@js-joda/timezone/dist/js-joda-timezone-10-year-range';
 import fetch from 'node-fetch';
 import { sprintf } from 'sprintf-js';
 import { DOMParser } from 'xmldom';
 import * as xpath from 'xpath';
 
-import { s3, dynamo } from './aws';
+import { dynamo, s3 } from './aws';
+import {
+  Bucket,
+  CacheControl,
+  TableName,
+  PRICE_KEY,
+  LITERS_PER_GALLON,
+  TZ,
+} from './config';
 
-const index: TemplateFunction = require('./pages/index.html.ejs');
-const feed: TemplateFunction = require('./pages/feed.atom.ejs');
-
-const Bucket = 'sixdollargas.org';
-const CacheControl = 'public';
-const TableName = 'gas-price-history';
-const PRICE_KEY = 'price';
-const LITERS_PER_GALLON = 3.785411784;
-const TZ = ZoneId.of('America/New_York');
+const index: TemplateFunction = require('../pages/index.html.ejs');
+const feed: TemplateFunction = require('../pages/feed.atom.ejs');
 
 const select = xpath.useNamespaces({
   ecb: 'http://www.ecb.int/vocabulary/2002-08-01/eurofxref',
@@ -59,9 +57,18 @@ const getPrice = async (): Promise<string> => {
   const r = await fetch(
     'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml'
   );
+  if (!r.ok) {
+    throw new Error(`couldn't fetch: ${r.statusText}`);
+  }
   const body = await r.text();
   const xml = new DOMParser().parseFromString(body);
-  const rate = select('//ecb:Cube[@currency="USD"]/@rate', xml, true) as Attr;
+  const rate = select('//ecb:Cube[@currency="USD"]/@rate', xml, true);
+  if (rate === null || typeof rate !== 'object' || !('value' in rate)) {
+    throw new Error('no rate found');
+  }
+  if (!/^[0-9]+(?:\.[0-9]+)?$/.test(rate.value)) {
+    throw new Error('invalid price');
+  }
   const eurPerDollar = parseFloat(rate.value);
   const price = 6 / (LITERS_PER_GALLON * eurPerDollar);
   return sprintf('€%0.2f', price);
@@ -149,4 +156,5 @@ export const main = async (): Promise<string> => {
   return message;
 };
 
-export const handler: ScheduledHandler = () => main().then(console.log);
+const handler: ScheduledHandler = () => main().then(console.log);
+export default handler;

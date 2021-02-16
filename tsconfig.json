@@ -4,7 +4,8 @@
     "target": "es5",
     "sourceMap": true,
     "noEmit": true,
-    "strict": true
+    "strict": true,
+    "lib": ["ES2019"]
   },
   "exclude": ["node_modules", "dist"]
 }
