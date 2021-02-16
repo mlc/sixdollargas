@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>graph</title>
+    <script
+      src="https://cdn.jsdelivr.net/combine/npm/vega@5.19.1,npm/vega-lite@4.17.0,npm/vega-embed@6.15.1"
+      type="text/javascript"
+    ></script>
+    <style type="text/css">
+      #vis {
+        width: 100%;
+        max-width: 600px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="vis"></div>
+    <script type="text/javascript">
+      const spec = {
+        $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
+        data: {
+          url: '/stats',
+        },
+        width: 'container',
+        height: 400,
+        mark: 'line',
+        encoding: {
+          x: {
+            field: 'date',
+            type: 'temporal',
+          },
+          y: {
+            field: 'price',
+            type: 'quantitative',
+            scale: {
+              domain: [1, 1.5],
+            },
+          },
+        },
+      };
+      vegaEmbed('#vis', spec);
+    </script>
+  </body>
+</html>
