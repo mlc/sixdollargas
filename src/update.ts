@@ -1,6 +1,6 @@
 import { ScheduledHandler } from 'aws-lambda';
 import { TemplateFunction } from 'ejs';
-import { convert, ZonedDateTime, ZoneId } from '@js-joda/core';
+import { convert, ZonedDateTime } from '@js-joda/core';
 import fetch from 'node-fetch';
 import { sprintf } from 'sprintf-js';
 import { DOMParser } from 'xmldom';
@@ -10,9 +10,9 @@ import { dynamo, s3 } from './aws';
 import {
   Bucket,
   CacheControl,
-  TableName,
-  PRICE_KEY,
   LITERS_PER_GALLON,
+  PRICE_KEY,
+  TableName,
   TZ,
 } from './config';
 
