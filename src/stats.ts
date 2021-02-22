@@ -1,5 +1,5 @@
+import { AttributeValue, paginateScan } from '@aws-sdk/client-dynamodb';
 import { APIGatewayProxyHandlerV2 } from 'aws-lambda';
-import { DynamoDB } from 'aws-sdk';
 import { dynamo } from './aws';
 import { DateTimeFormatter, ZonedDateTime, ZoneId } from '@js-joda/core';
 // @ts-ignore
@@ -16,36 +16,35 @@ interface Item {
   price: number;
 }
 
+const unmarshall = ({
+  price,
+  date,
+}: {
+  [key: string]: AttributeValue;
+}): Item[] => {
+  if (typeof date?.S === 'string' && typeof price?.N === 'string') {
+    return [
+      {
+        date: date.S,
+        price: parseFloat(price.N),
+      },
+    ];
+  } else {
+    return [];
+  }
+};
+
 const getStats: APIGatewayProxyHandlerV2 = async () => {
   const data: Item[] = [];
-  let key: DynamoDB.Key | undefined = undefined;
 
-  do {
-    const response: DynamoDB.ScanOutput = await dynamo
-      .scan({
-        TableName,
-        ExclusiveStartKey: key,
-      })
-      .promise();
-
+  for await (const response of paginateScan(
+    { client: dynamo },
+    { TableName }
+  )) {
     if (response.Items && response.Items.length > 0) {
-      data.push(
-        ...response.Items.flatMap(({ price, date }) => {
-          if (typeof date.S === 'string' && typeof price.N === 'string') {
-            return [
-              {
-                date: date.S,
-                price: parseFloat(price.N),
-              },
-            ];
-          } else {
-            return [];
-          }
-        })
-      );
+      data.push(...response.Items.flatMap(unmarshall));
     }
-    key = response.LastEvaluatedKey;
-  } while (key !== undefined);
+  }
 
   const maxDate = data.reduce((acc, { date }) => (date > acc ? date : acc), '');
   const headers: { [h: string]: string } = {

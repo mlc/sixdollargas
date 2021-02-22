@@ -1,5 +1,12 @@
+import { PutItemCommand } from '@aws-sdk/client-dynamodb';
+import {
+  CopyObjectCommand,
+  GetObjectCommand,
+  PutObjectCommand,
+} from '@aws-sdk/client-s3';
 import { ScheduledHandler } from 'aws-lambda';
 import { TemplateFunction } from 'ejs';
+import getStream from 'get-stream';
 import { convert, ZonedDateTime } from '@js-joda/core';
 import fetch from 'node-fetch';
 import { sprintf } from 'sprintf-js';
@@ -76,13 +83,14 @@ const getPrice = async (): Promise<string> => {
 
 const getOldPrice = (): Promise<string> =>
   s3
-    .getObject({
-      Bucket,
-      Key: PRICE_KEY,
-    })
-    .promise()
+    .send(
+      new GetObjectCommand({
+        Bucket,
+        Key: PRICE_KEY,
+      })
+    )
     .then(
-      ({ Body }) => (Body as Buffer).toString(),
+      ({ Body }) => getStream(Body as NodeJS.ReadableStream),
       (e) => {
         const { code } = e;
         if (code === 'NoSuchKey') {
@@ -98,8 +106,8 @@ type FileHandler<T = unknown> = (
 ) => Promise<T>;
 
 const upload: FileHandler = (locals, { transformer, Key, ContentType }) =>
-  s3
-    .putObject({
+  s3.send(
+    new PutObjectCommand({
       Bucket,
       Key,
       Body: Buffer.from(transformer(locals), 'utf-8'),
@@ -107,11 +115,11 @@ const upload: FileHandler = (locals, { transformer, Key, ContentType }) =>
       ContentType,
       Expires: locals.Expires,
     })
-    .promise();
+  );
 
 const updateExpiry: FileHandler = ({ Expires }, { Key, ContentType }) =>
-  s3
-    .copyObject({
+  s3.send(
+    new CopyObjectCommand({
       Bucket,
       Key,
       CopySource: `${Bucket}/${Key}`,
@@ -120,18 +128,18 @@ const updateExpiry: FileHandler = ({ Expires }, { Key, ContentType }) =>
       Expires,
       MetadataDirective: 'REPLACE',
     })
-    .promise();
+  );
 
 const storeInDb = ({ now, price }: Locals): Promise<any> =>
-  dynamo
-    .putItem({
+  dynamo.send(
+    new PutItemCommand({
       TableName,
       Item: {
         date: { S: now },
         price: { N: price.substr(1) },
       },
     })
-    .promise();
+  );
 
 export const main = async (): Promise<string> => {
   const now = ZonedDateTime.now(TZ);

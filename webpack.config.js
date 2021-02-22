@@ -6,7 +6,6 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'index.js',
-    library: 'index',
     libraryTarget: 'commonjs2',
   },
   module: {
@@ -29,7 +28,6 @@ module.exports = {
     extensions: ['.ts', '.js'],
   },
   target: 'node',
-  externals: ['aws-sdk'],
   devtool: 'source-map',
   optimization: { minimize: false },
 };
