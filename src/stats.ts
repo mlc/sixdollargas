@@ -35,17 +35,18 @@ const unmarshall = ({
 };
 
 const getStats: APIGatewayProxyHandlerV2 = async () => {
-  const data: Item[] = [];
+  const pages: Item[][] = [];
 
   for await (const response of paginateScan(
     { client: dynamo },
     { TableName }
   )) {
     if (response.Items && response.Items.length > 0) {
-      data.push(...response.Items.flatMap(unmarshall));
+      pages.push(response.Items.flatMap(unmarshall));
     }
   }
 
+  const data = pages.flat();
   const maxDate = data.reduce((acc, { date }) => (date > acc ? date : acc), '');
   const headers: { [h: string]: string } = {
     'content-type': 'application/json',
