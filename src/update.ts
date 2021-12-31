@@ -10,7 +10,7 @@ import getStream from 'get-stream';
 import { convert, ZonedDateTime } from '@js-joda/core';
 import fetch from 'node-fetch';
 import { sprintf } from 'sprintf-js';
-import { DOMParser } from 'xmldom';
+import { DOMParser } from '@xmldom/xmldom';
 import * as xpath from 'xpath';
 
 import { dynamo, s3 } from './aws';
