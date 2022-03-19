@@ -130,7 +130,7 @@ const updateExpiry: FileHandler = ({ Expires }, { Key, ContentType }) =>
     })
   );
 
-const storeInDb = ({ now, price }: Locals): Promise<any> =>
+const storeInDb = ({ now, price }: Locals): Promise<unknown> =>
   dynamo.send(
     new PutItemCommand({
       TableName,
