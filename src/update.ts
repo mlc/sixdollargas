@@ -5,13 +5,14 @@ import {
   PutObjectCommand,
 } from '@aws-sdk/client-s3';
 import { ScheduledHandler } from 'aws-lambda';
-import { TemplateFunction } from 'ejs';
+import { compile, TemplateFunction } from 'ejs';
 import getStream from 'get-stream';
 import { convert, ZonedDateTime } from '@js-joda/core';
 import fetch from 'node-fetch';
 import { sprintf } from 'sprintf-js';
 import { DOMParser } from '@xmldom/xmldom';
 import * as xpath from 'xpath';
+import { readFile } from 'fs/promises';
 
 import { dynamo, s3 } from './aws';
 import {
@@ -23,9 +24,6 @@ import {
   TZ,
 } from './config';
 
-const index: TemplateFunction = require('../pages/index.html.ejs');
-const feed: TemplateFunction = require('../pages/feed.atom.ejs');
-
 const select = xpath.useNamespaces({
   ecb: 'http://www.ecb.int/vocabulary/2002-08-01/eurofxref',
 });
@@ -36,9 +34,19 @@ interface Locals {
   Expires: Date;
 }
 
+const useEjs =
+  (fn: string) =>
+  async (locals: Locals): Promise<string> => {
+    const template = compile(await readFile(fn, 'utf-8'));
+    return template(locals);
+  };
+
+const index = useEjs('./index.html.ejs');
+const feed = useEjs('./feed.atom.ejs');
+
 interface FileDescription {
   Key: string;
-  transformer: (locals: Locals) => string;
+  transformer: (locals: Locals) => Promise<string>;
   ContentType: string;
 }
 
@@ -55,7 +63,7 @@ const files: readonly FileDescription[] = [
   },
   {
     Key: PRICE_KEY,
-    transformer: ({ price }) => price,
+    transformer: ({ price }) => Promise.resolve(price),
     ContentType: 'text/plain;charset=utf-8',
   },
 ];
@@ -92,8 +100,8 @@ const getOldPrice = (): Promise<string> =>
     .then(
       ({ Body }) => getStream(Body as NodeJS.ReadableStream),
       (e) => {
-        const { code } = e;
-        if (code === 'NoSuchKey') {
+        const { Code } = e;
+        if (Code === 'NoSuchKey') {
           return '';
         }
         throw e;
@@ -105,12 +113,12 @@ type FileHandler<T = unknown> = (
   fileDescription: FileDescription
 ) => Promise<T>;
 
-const upload: FileHandler = (locals, { transformer, Key, ContentType }) =>
+const upload: FileHandler = async (locals, { transformer, Key, ContentType }) =>
   s3.send(
     new PutObjectCommand({
       Bucket,
       Key,
-      Body: Buffer.from(transformer(locals), 'utf-8'),
+      Body: Buffer.from(await transformer(locals), 'utf-8'),
       CacheControl,
       ContentType,
       Expires: locals.Expires,

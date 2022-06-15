@@ -17,12 +17,6 @@ const config: webpack.Configuration = {
           loader: 'ts-loader',
         },
       },
-      {
-        test: /\.ejs$/,
-        use: {
-          loader: 'ejs-webpack-loader',
-        },
-      },
     ],
   },
   resolve: {

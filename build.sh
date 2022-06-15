@@ -5,6 +5,7 @@ set -ex
 rm -rf dist dist.zip
 mkdir dist
 yarn build
+cp pages/*ejs dist
 zip -j -9 -r dist.zip dist
 
 fn="gas-lambda/dist-$(date +%s).zip"
