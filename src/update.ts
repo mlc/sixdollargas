@@ -5,13 +5,13 @@ import {
   PutObjectCommand,
 } from '@aws-sdk/client-s3';
 import { ScheduledHandler } from 'aws-lambda';
-import { compile, TemplateFunction } from 'ejs';
+import { compile } from 'ejs';
 import getStream from 'get-stream';
 import { convert, ZonedDateTime } from '@js-joda/core';
 import fetch from 'node-fetch';
 import { sprintf } from 'sprintf-js';
 import { DOMParser } from '@xmldom/xmldom';
-import * as xpath from 'xpath';
+import { useNamespaces } from 'xpath';
 import { readFile } from 'fs/promises';
 
 import { dynamo, s3 } from './aws';
@@ -24,7 +24,7 @@ import {
   TZ,
 } from './config';
 
-const select = xpath.useNamespaces({
+const select = useNamespaces({
   ecb: 'http://www.ecb.int/vocabulary/2002-08-01/eurofxref',
 });
 
@@ -34,19 +34,19 @@ interface Locals {
   Expires: Date;
 }
 
-const useEjs =
-  (fn: string) =>
-  async (locals: Locals): Promise<string> => {
-    const template = compile(await readFile(fn, 'utf-8'));
-    return template(locals);
-  };
+type Transformer = (locals: Locals) => Promise<string>;
+
+const useEjs = (fn: string): Transformer => {
+  const funct = readFile(fn, 'utf-8').then((template) => compile(template));
+  return (locals: Locals) => funct.then((f) => f(locals));
+};
 
 const index = useEjs('./index.html.ejs');
 const feed = useEjs('./feed.atom.ejs');
 
 interface FileDescription {
   Key: string;
-  transformer: (locals: Locals) => Promise<string>;
+  transformer: Transformer;
   ContentType: string;
 }
 
@@ -144,7 +144,7 @@ const storeInDb = ({ now, price }: Locals): Promise<unknown> =>
       TableName,
       Item: {
         date: { S: now },
-        price: { N: price.substr(1) },
+        price: { N: price.substring(1) },
       },
     })
   );
