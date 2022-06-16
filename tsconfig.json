@@ -3,7 +3,10 @@
   "compilerOptions": {
     "sourceMap": true,
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": false,
+    "importHelpers": true,
+    "module": "ES2020",
+    "allowSyntheticDefaultImports": true
   },
   "exclude": ["node_modules", "dist"]
 }
