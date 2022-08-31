@@ -4,7 +4,7 @@ import {
   GetObjectCommand,
   PutObjectCommand,
 } from '@aws-sdk/client-s3';
-import { ScheduledHandler } from 'aws-lambda';
+import type { ScheduledHandler } from 'aws-lambda';
 import { compile } from 'ejs';
 import getStream from 'get-stream';
 import { convert, ZonedDateTime } from '@js-joda/core';
@@ -12,7 +12,7 @@ import fetch from 'node-fetch';
 import { sprintf } from 'sprintf-js';
 import { DOMParser } from '@xmldom/xmldom';
 import { useNamespaces } from 'xpath';
-import { readFile } from 'fs/promises';
+import { readFile } from 'node:fs/promises';
 
 import { dynamo, s3 } from './aws';
 import {
