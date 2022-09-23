@@ -23,9 +23,7 @@ interface Item {
 const unmarshall = ({
   price,
   date,
-}: {
-  [key: string]: AttributeValue;
-}): Item[] => {
+}: Record<string, AttributeValue>): Item[] => {
   if (typeof date?.S === 'string' && typeof price?.N === 'string') {
     return [
       {
@@ -58,10 +56,10 @@ const getStats: APIGatewayProxyHandlerV2 =
     );
     const body = JSON.stringify(data);
 
-    const headers: { [h: string]: string } = {
+    const headers: Record<string, string> = {
       'content-type': 'application/json',
       'cache-control': 'public',
-      etag: sha256(body),
+      etag: `"${sha256(body)}"`,
     };
     if (maxDate) {
       const parsed = ZonedDateTime.parse(maxDate).withZoneSameInstant(

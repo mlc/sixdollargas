@@ -5,6 +5,7 @@
   "author": "mike castleman <m@mlcastle.net>",
   "scripts": {
     "build": "rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
+    "typecheck": "tsc --noEmit",
     "prepare": "husky install"
   },
   "private": true,
