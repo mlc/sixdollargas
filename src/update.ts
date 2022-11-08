@@ -76,7 +76,10 @@ const getPrice = async (): Promise<string> => {
     throw new Error(`couldn't fetch: ${r.statusText}`);
   }
   const body = await r.text();
-  const xml = new DOMParser().parseFromString(body);
+  const xml = new DOMParser().parseFromString(
+    body,
+    r.headers.get('Content-Type') ?? undefined
+  );
   const rate = select('//ecb:Cube[@currency="USD"]/@rate', xml, true);
   if (rate === null || typeof rate !== 'object' || !('value' in rate)) {
     throw new Error('no rate found');
