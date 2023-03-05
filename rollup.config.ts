@@ -27,6 +27,7 @@ const config: RollupOptions = {
     entryFileNames: '[name].mjs',
     chunkFileNames: '[name]-[hash].mjs',
   },
+  external: [/^@aws-sdk\//],
   plugins,
 };
 

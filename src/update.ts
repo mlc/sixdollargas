@@ -8,7 +8,6 @@ import type { ScheduledHandler } from 'aws-lambda';
 import { compile } from 'ejs';
 import getStream from 'get-stream';
 import { convert, ZonedDateTime } from '@js-joda/core';
-import fetch from 'node-fetch';
 import { sprintf } from 'sprintf-js';
 import { DOMParser } from '@xmldom/xmldom';
 import { useNamespaces } from 'xpath';
