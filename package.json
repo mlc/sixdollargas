@@ -4,7 +4,6 @@
   "main": "index.js",
   "author": "mike castleman <m@mlcastle.net>",
   "scripts": {
-    "build": "rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
     "typecheck": "tsc --noEmit",
     "prepare": "husky install"
   },
@@ -18,27 +17,22 @@
     "@xmldom/xmldom": "0.8.6",
     "ejs": "3.1.8",
     "get-stream": "6.0.1",
-    "source-map-support": "0.5.21",
     "sprintf-js": "1.1.2",
     "tslib": "2.5.0",
     "xpath": "0.0.32"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "24.0.1",
-    "@rollup/plugin-json": "6.0.0",
-    "@rollup/plugin-node-resolve": "15.0.1",
-    "@rollup/plugin-typescript": "11.0.0",
     "@tsconfig/node18": "1.0.1",
     "@types/aws-lambda": "8.10.111",
     "@types/ejs": "3.1.2",
     "@types/node": "18.14.6",
     "@types/source-map-support": "^0.5.6",
     "@types/sprintf-js": "1.1.2",
+    "esbuild": "0.17.12",
     "husky": "8.0.3",
     "prettier": "2.8.4",
     "pretty-quick": "3.1.3",
-    "rollup": "3.18.0",
-    "typescript": "4.9.5"
+    "typescript": "5.0.2"
   },
   "browserslist": [
     "node 18"

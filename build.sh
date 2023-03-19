@@ -4,7 +4,7 @@ set -ex
 
 rm -rf dist dist.zip
 mkdir dist
-yarn build
+node build.mjs
 cp pages/*ejs dist
 zip -j -9 -r dist.zip dist
 
