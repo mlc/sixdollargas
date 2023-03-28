@@ -26,7 +26,6 @@
     "@types/aws-lambda": "8.10.114",
     "@types/ejs": "3.1.2",
     "@types/node": "18.15.10",
-    "@types/source-map-support": "0.5.6",
     "@types/sprintf-js": "1.1.2",
     "esbuild": "0.17.14",
     "husky": "8.0.3",
