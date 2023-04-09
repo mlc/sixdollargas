@@ -3,7 +3,7 @@
   <title>Six Dollar Gas</title>
   <link rel="alternate" type="text/html" href="https://sixdollargas.org/"/>
   <link rel="self" href="https://sixdollargas.org/feed.atom"/>
-  <updated><%= now %></updated>
+  <updated><%= locals.now %></updated>
   <rights>copyrights are wrong</rights>
   <generator version="2.6.3">GNU nano</generator>
   <author>
@@ -14,13 +14,13 @@
 
   <entry>
     <title>Six Dollar Gas</title>
-    <updated><%= now %></updated>
+    <updated><%= locals.now %></updated>
     <id>tag:sixdollargas.org,2008-11-20:nonews</id>
     <content type="xhtml">
       <div xmlns="http://www.w3.org/1999/xhtml">
         <img src="https://sixdollargas.org/bp.jpg" width="194" height="345" alt="" />
         <h1>six dollar gas party</h1>
-        <p>I'm throwing a party when gas prices in the US reach $6 per gallon (approx <%= price %>/L).</p>
+        <p>I'm throwing a party when gas prices in the US reach $6 per gallon (approx <%= locals.price %>/L).</p>
         <p>Details to follow at the appropriate time.</p>
       </div>
     </content>

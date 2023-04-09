@@ -5,13 +5,13 @@ import {
   PutObjectCommand,
 } from '@aws-sdk/client-s3';
 import type { ScheduledHandler } from 'aws-lambda';
-import { compile } from 'ejs';
 import getStream from 'get-stream';
 import { convert, ZonedDateTime } from '@js-joda/core';
 import { sprintf } from 'sprintf-js';
 import { DOMParser } from '@xmldom/xmldom';
 import { useNamespaces } from 'xpath';
-import { readFile } from 'node:fs/promises';
+import index from './index.html.ejs';
+import feed from './feed.atom.ejs';
 
 import { dynamo, s3 } from './aws';
 import {
@@ -34,14 +34,6 @@ interface Locals {
 }
 
 type Transformer = (locals: Locals) => Promise<string>;
-
-const useEjs = (fn: string): Transformer => {
-  const funct = readFile(fn, 'utf-8').then((template) => compile(template));
-  return (locals: Locals) => funct.then((f) => f(locals));
-};
-
-const index = useEjs('./index.html.ejs');
-const feed = useEjs('./feed.atom.ejs');
 
 interface FileDescription {
   Key: string;
