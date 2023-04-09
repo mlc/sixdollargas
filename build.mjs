@@ -34,6 +34,10 @@ const build = await esbuild.build({
   metafile: true,
   target: 'node18',
   plugins: [ejsPlugin],
+  format: 'esm',
+  outExtension: {
+    '.js': '.mjs',
+  },
 });
 
 await writeFile('meta.json', JSON.stringify(build.metafile), {

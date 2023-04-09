@@ -5,7 +5,6 @@ import {
   PutObjectCommand,
 } from '@aws-sdk/client-s3';
 import type { ScheduledHandler } from 'aws-lambda';
-import getStream from 'get-stream';
 import { convert, ZonedDateTime } from '@js-joda/core';
 import { sprintf } from 'sprintf-js';
 import { DOMParser } from '@xmldom/xmldom';
@@ -92,7 +91,7 @@ const getOldPrice = (): Promise<string> =>
       })
     )
     .then(
-      ({ Body }) => getStream(Body as NodeJS.ReadableStream),
+      ({ Body }) => Body?.transformToString() ?? '',
       (e) => {
         const { Code } = e;
         if (Code === 'NoSuchKey') {
