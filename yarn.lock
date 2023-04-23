@@ -1130,10 +1130,10 @@
   resolved "https://registry.yarnpkg.com/@js-joda/timezone/-/timezone-2.18.0.tgz#b12128cbfc7d15c2f7180db55cb4719b85ab05f1"
   integrity sha512-NjNDwj2AuFzVgW1XvKq3t0oH/BwK+Zsu6TiCsDkQZFx4h3W3oKgmUJUKleMBHMFJvh7sQRTK9hSqK/6izBuyAA==
 
-"@tsconfig/node18@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@tsconfig/node18/-/node18-1.0.3.tgz#b14aed11bda116950a57fb5d223dd050e47f4fe1"
-  integrity sha512-RbwvSJQsuN9TB04AQbGULYfOGE/RnSFk/FLQ5b0NmDf5Kx2q/lABZbHQPKCO1vZ6Fiwkplu+yb9pGdLy1iGseQ==
+"@tsconfig/node18@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@tsconfig/node18/-/node18-2.0.0.tgz#58b52430d00913dc26c4459fbc7f05396e47886a"
+  integrity sha512-uI/B0ShkiEwTk036pncXucVlj4y11EW6mycQvCEzC1PkR2TBvdQZ5Wf96dp+XXWAc70FEDfvwTqanoaDpP6rPw==
 
 "@types/aws-lambda@8.10.114":
   version "8.10.114"
