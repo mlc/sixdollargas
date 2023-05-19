@@ -20,13 +20,13 @@
     "xpath": "0.0.32"
   },
   "devDependencies": {
-    "@tsconfig/node18": "2.0.0",
+    "@tsconfig/node18": "2.0.1",
     "@types/aws-lambda": "8.10.115",
     "@types/ejs": "3.1.2",
-    "@types/node": "18.16.5",
+    "@types/node": "18.16.13",
     "@types/sprintf-js": "1.1.2",
     "ejs": "3.1.9",
-    "esbuild": "0.17.18",
+    "esbuild": "0.17.19",
     "husky": "8.0.3",
     "prettier": "2.8.8",
     "pretty-quick": "3.1.3",
