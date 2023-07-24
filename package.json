@@ -10,11 +10,11 @@
   "private": true,
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.370.0",
-    "@aws-sdk/client-s3": "3.370.0",
+    "@aws-sdk/client-s3": "3.374.0",
     "@js-joda/core": "5.5.3",
     "@js-joda/locale_en-us": "4.8.10",
     "@js-joda/timezone": "2.18.0",
-    "@xmldom/xmldom": "0.8.9",
+    "@xmldom/xmldom": "0.8.10",
     "sprintf-js": "1.1.2",
     "tslib": "2.6.0",
     "xpath": "0.0.33"
