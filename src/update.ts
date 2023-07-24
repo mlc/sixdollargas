@@ -8,7 +8,7 @@ import type { ScheduledHandler } from 'aws-lambda';
 import { convert, ZonedDateTime } from '@js-joda/core';
 import { sprintf } from 'sprintf-js';
 import { DOMParser } from '@xmldom/xmldom';
-import { useNamespaces } from 'xpath';
+import { SelectedValue, useNamespaces } from 'xpath';
 import index from './index.html.ejs';
 import feed from './feed.atom.ejs';
 
@@ -58,6 +58,11 @@ const files: readonly FileDescription[] = [
   },
 ];
 
+const isAttr = (selectedValue: SelectedValue): selectedValue is Attr =>
+  selectedValue !== null &&
+  typeof selectedValue === 'object' &&
+  'value' in selectedValue;
+
 const getPrice = async (): Promise<string> => {
   const r = await fetch(
     'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml'
@@ -71,7 +76,7 @@ const getPrice = async (): Promise<string> => {
     r.headers.get('Content-Type') ?? undefined
   );
   const rate = select('//ecb:Cube[@currency="USD"]/@rate', xml, true);
-  if (rate === null || typeof rate !== 'object' || !('value' in rate)) {
+  if (!isAttr(rate)) {
     throw new Error('no rate found');
   }
   if (!/^[0-9]+(?:\.[0-9]+)?$/.test(rate.value)) {
