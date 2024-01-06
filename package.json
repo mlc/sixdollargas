@@ -9,8 +9,8 @@
   },
   "private": true,
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "3.484.0",
-    "@aws-sdk/client-s3": "3.484.0",
+    "@aws-sdk/client-dynamodb": "3.485.0",
+    "@aws-sdk/client-s3": "3.485.0",
     "@js-joda/core": "5.6.1",
     "@js-joda/locale_en-us": "4.8.11",
     "@js-joda/timezone": "2.18.2",
@@ -20,10 +20,10 @@
     "xpath": "0.0.34"
   },
   "devDependencies": {
-    "@tsconfig/node18": "18.2.2",
-    "@types/aws-lambda": "8.10.130",
+    "@tsconfig/node20": "20.1.2",
+    "@types/aws-lambda": "8.10.131",
     "@types/ejs": "3.1.5",
-    "@types/node": "18.19.4",
+    "@types/node": "20.10.6",
     "@types/sprintf-js": "1.1.4",
     "ejs": "3.1.9",
     "esbuild": "0.19.11",
@@ -38,6 +38,6 @@
     ]
   },
   "browserslist": [
-    "node 18"
+    "node 20"
   ]
 }
