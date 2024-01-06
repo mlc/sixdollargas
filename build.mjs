@@ -25,7 +25,7 @@ const build = await esbuild.build({
   outdir: 'dist',
   entryPoints: ['src/index.ts'],
   bundle: true,
-  minify: true,
+  minify: false,
   sourcemap: true,
   write: true,
   platform: 'node',
