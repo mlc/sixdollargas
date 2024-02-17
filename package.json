@@ -5,7 +5,7 @@
   "author": "mike castleman <m@mlcastle.net>",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "private": true,
   "dependencies": {
@@ -27,7 +27,7 @@
     "@types/sprintf-js": "1.1.4",
     "ejs": "3.1.9",
     "esbuild": "0.19.11",
-    "husky": "8.0.3",
+    "husky": "9.0.11",
     "lint-staged": "15.2.0",
     "prettier": "3.1.1",
     "typescript": "5.3.3"
