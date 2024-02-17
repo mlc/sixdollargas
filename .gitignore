@@ -3,3 +3,7 @@ yarn-error.log
 dist
 dist.zip
 meta.json
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+.pnp.*
