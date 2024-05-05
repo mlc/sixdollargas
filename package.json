@@ -20,17 +20,17 @@
     "xpath": "0.0.34"
   },
   "devDependencies": {
-    "@tsconfig/node20": "20.1.2",
-    "@types/aws-lambda": "8.10.136",
+    "@tsconfig/node20": "20.1.4",
+    "@types/aws-lambda": "8.10.137",
     "@types/ejs": "3.1.5",
-    "@types/node": "20.11.30",
+    "@types/node": "20.12.8",
     "@types/sprintf-js": "1.1.4",
     "ejs": "3.1.10",
     "esbuild": "0.20.2",
     "husky": "9.0.11",
     "lint-staged": "15.2.2",
     "prettier": "3.2.5",
-    "typescript": "5.4.3"
+    "typescript": "5.4.5"
   },
   "lint-staged": {
     "*.{js,ts,css,md,json}": [
