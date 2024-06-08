@@ -21,15 +21,15 @@
   },
   "devDependencies": {
     "@tsconfig/node20": "20.1.4",
-    "@types/aws-lambda": "8.10.137",
+    "@types/aws-lambda": "8.10.138",
     "@types/ejs": "3.1.5",
-    "@types/node": "20.12.8",
+    "@types/node": "20.14.2",
     "@types/sprintf-js": "1.1.4",
     "ejs": "3.1.10",
-    "esbuild": "0.20.2",
+    "esbuild": "0.21.4",
     "husky": "9.0.11",
-    "lint-staged": "15.2.2",
-    "prettier": "3.2.5",
+    "lint-staged": "15.2.5",
+    "prettier": "3.3.1",
     "typescript": "5.4.5"
   },
   "lint-staged": {
