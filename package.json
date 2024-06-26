@@ -21,16 +21,16 @@
   },
   "devDependencies": {
     "@tsconfig/node20": "20.1.4",
-    "@types/aws-lambda": "8.10.138",
+    "@types/aws-lambda": "8.10.140",
     "@types/ejs": "3.1.5",
-    "@types/node": "20.14.2",
+    "@types/node": "20.14.9",
     "@types/sprintf-js": "1.1.4",
     "ejs": "3.1.10",
-    "esbuild": "0.21.4",
+    "esbuild": "0.21.5",
     "husky": "9.0.11",
-    "lint-staged": "15.2.5",
-    "prettier": "3.3.1",
-    "typescript": "5.4.5"
+    "lint-staged": "15.2.7",
+    "prettier": "3.3.2",
+    "typescript": "5.5.2"
   },
   "lint-staged": {
     "*.{js,ts,css,md,json}": [
