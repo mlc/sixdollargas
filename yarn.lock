@@ -1588,6 +1588,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xmldom/is-dom-node@npm:1.0.1":
+  version: 1.0.1
+  resolution: "@xmldom/is-dom-node@npm:1.0.1"
+  checksum: 10c0/138d5e74441b16f065ce360d81737673986d93f14d5bb09b1e3bcfc2b18fae70b86beb9b7bfbffe916dd36b3bdab012acaa81cc0b49450acadfd66978b62827f
+  languageName: node
+  linkType: hard
+
 "@xmldom/xmldom@npm:0.9.3":
   version: 0.9.3
   resolution: "@xmldom/xmldom@npm:0.9.3"
@@ -2267,6 +2274,7 @@ __metadata:
     "@types/ejs": "npm:3.1.5"
     "@types/node": "npm:20.16.10"
     "@types/sprintf-js": "npm:1.1.4"
+    "@xmldom/is-dom-node": "npm:1.0.1"
     "@xmldom/xmldom": "npm:0.9.3"
     ejs: "npm:3.1.10"
     esbuild: "npm:0.24.0"

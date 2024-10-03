@@ -7,7 +7,8 @@ import {
 import type { ScheduledHandler } from 'aws-lambda';
 import { convert, ZonedDateTime } from '@js-joda/core';
 import { sprintf } from 'sprintf-js';
-import { DOMParser } from '@xmldom/xmldom';
+import { assertIsDocumentNode } from '@xmldom/is-dom-node';
+import { DOMParser, MIME_TYPE } from '@xmldom/xmldom';
 import { SelectedValue, useNamespaces } from 'xpath';
 import index from './index.html.ejs';
 import feed from './feed.atom.ejs';
@@ -73,8 +74,9 @@ const getPrice = async (): Promise<string> => {
   const body = await r.text();
   const xml = new DOMParser().parseFromString(
     body,
-    r.headers.get('Content-Type') ?? undefined
+    r.headers.get('Content-Type') ?? MIME_TYPE.XML_TEXT
   );
+  assertIsDocumentNode(xml);
   const rate = select('//ecb:Cube[@currency="USD"]/@rate', xml, true);
   if (!isAttr(rate)) {
     throw new Error('no rate found');
