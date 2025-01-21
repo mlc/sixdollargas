@@ -32,7 +32,7 @@ const build = await esbuild.build({
   external: ['@aws-sdk'],
   legalComments: 'linked',
   metafile: true,
-  target: 'node20',
+  target: 'node22',
   plugins: [ejsPlugin],
   format: 'esm',
   outExtension: {
