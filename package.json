@@ -24,14 +24,14 @@
     "@tsconfig/node20": "20.1.4",
     "@types/aws-lambda": "8.10.147",
     "@types/ejs": "3.1.5",
-    "@types/node": "20.17.12",
+    "@types/node": "20.17.14",
     "@types/sprintf-js": "1.1.4",
     "ejs": "3.1.10",
     "esbuild": "0.24.2",
     "husky": "9.1.7",
-    "lint-staged": "15.3.0",
+    "lint-staged": "15.4.1",
     "prettier": "3.4.2",
-    "typescript": "5.7.2"
+    "typescript": "5.7.3"
   },
   "lint-staged": {
     "*.{js,ts,css,md,json}": [
