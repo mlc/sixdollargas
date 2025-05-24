@@ -1515,10 +1515,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/node22@npm:22.0.1":
-  version: 22.0.1
-  resolution: "@tsconfig/node22@npm:22.0.1"
-  checksum: 10c0/9448a14da65ebdafe10bef2582df11c8c8a769b919854747ad97f127eedc188f5e383b5b08df74bd895fa3738f17a442f9de153c0b326f870f2b335f36b51c43
+"@tsconfig/node22@npm:22.0.2":
+  version: 22.0.2
+  resolution: "@tsconfig/node22@npm:22.0.2"
+  checksum: 10c0/c75e6b9ea86ec2a384adefac0e2f16a6c08202ae5cf6c8c745944396a6931ffb38e742809491c1882d1868c2af1c33744193701779674bfb1e05f6a130045a18
   languageName: node
   linkType: hard
 
@@ -1536,12 +1536,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:22.15.19":
-  version: 22.15.19
-  resolution: "@types/node@npm:22.15.19"
+"@types/node@npm:22.15.21":
+  version: 22.15.21
+  resolution: "@types/node@npm:22.15.21"
   dependencies:
     undici-types: "npm:~6.21.0"
-  checksum: 10c0/8ef52fa1a91b1c8891616d46f3921a9f3c65ad1c6bb62db7899c8c28643c13bf9d607a2403b1e5aceb3e6fa6749efc9e0ba5c39618a4872da6946437b0edbfbe
+  checksum: 10c0/f092bbccda2131c2b2c8f720338080aa0ef1d928f5f1062c03954a4f7dafa7ee3ed29bc3e51bd4e2584473b3d943c637a2b39ad7174898970818270187cf10c1
   languageName: node
   linkType: hard
 
@@ -2132,10 +2132,10 @@ __metadata:
     "@js-joda/core": "npm:5.6.5"
     "@js-joda/locale_en-us": "npm:4.15.1"
     "@js-joda/timezone": "npm:2.22.0"
-    "@tsconfig/node22": "npm:22.0.1"
+    "@tsconfig/node22": "npm:22.0.2"
     "@types/aws-lambda": "npm:8.10.149"
     "@types/ejs": "npm:3.1.5"
-    "@types/node": "npm:22.15.19"
+    "@types/node": "npm:22.15.21"
     "@types/sprintf-js": "npm:1.1.4"
     "@xmldom/is-dom-node": "npm:1.0.1"
     "@xmldom/xmldom": "npm:0.9.8"
