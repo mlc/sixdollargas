@@ -21,15 +21,15 @@
     "xpath": "0.0.34"
   },
   "devDependencies": {
-    "@tsconfig/node22": "22.0.1",
-    "@types/aws-lambda": "8.10.149",
+    "@tsconfig/node22": "22.0.2",
+    "@types/aws-lambda": "8.10.150",
     "@types/ejs": "3.1.5",
-    "@types/node": "22.15.19",
+    "@types/node": "22.15.32",
     "@types/sprintf-js": "1.1.4",
     "ejs": "3.1.10",
-    "esbuild": "0.25.4",
+    "esbuild": "0.25.5",
     "husky": "9.1.7",
-    "lint-staged": "16.0.0",
+    "lint-staged": "16.1.2",
     "prettier": "3.5.3",
     "typescript": "5.8.3"
   },
@@ -41,5 +41,5 @@
   "browserslist": [
     "node 20"
   ],
-  "packageManager": "yarn@4.9.1"
+  "packageManager": "yarn@4.9.2"
 }
