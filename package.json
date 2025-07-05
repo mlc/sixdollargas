@@ -9,8 +9,8 @@
   },
   "private": true,
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "3.830.0",
-    "@aws-sdk/client-s3": "3.832.0",
+    "@aws-sdk/client-dynamodb": "3.840.0",
+    "@aws-sdk/client-s3": "3.842.0",
     "@js-joda/core": "5.6.5",
     "@js-joda/locale_en-us": "4.15.1",
     "@js-joda/timezone": "2.22.0",
@@ -24,13 +24,13 @@
     "@tsconfig/node22": "22.0.2",
     "@types/aws-lambda": "8.10.150",
     "@types/ejs": "3.1.5",
-    "@types/node": "22.15.32",
+    "@types/node": "22.16.0",
     "@types/sprintf-js": "1.1.4",
     "ejs": "3.1.10",
     "esbuild": "0.25.5",
     "husky": "9.1.7",
     "lint-staged": "16.1.2",
-    "prettier": "3.5.3",
+    "prettier": "3.6.2",
     "typescript": "5.8.3"
   },
   "lint-staged": {
