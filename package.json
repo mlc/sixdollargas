@@ -9,8 +9,8 @@
   },
   "private": true,
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "3.883.0",
-    "@aws-sdk/client-s3": "3.883.0",
+    "@aws-sdk/client-dynamodb": "3.902.0",
+    "@aws-sdk/client-s3": "3.901.0",
     "@js-joda/core": "5.6.5",
     "@js-joda/locale_en-us": "4.15.1",
     "@js-joda/timezone": "2.22.0",
