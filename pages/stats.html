@@ -1,14 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>graph</title>
-    <script
-      src="https://cdn.jsdelivr.net/combine/npm/vega@5.22.1,npm/vega-lite@5.5.0,npm/vega-embed@6.21.0"
-      type="text/javascript"
-    ></script>
-    <style type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/vega@6.2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7.0.2"></script>    <style type="text/css">
       #vis {
         width: 100%;
         max-width: 600px;
@@ -19,7 +17,7 @@
     <div id="vis"></div>
     <script type="text/javascript">
       const spec = {
-        $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
+        $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
         data: {
           url: '/stats',
         },
