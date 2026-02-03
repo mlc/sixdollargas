@@ -1,13 +1,13 @@
 import * as esbuild from 'esbuild';
-import { compile } from 'ejs';
+import ejs from 'ejs';
 import { readFile, writeFile } from 'fs/promises';
 
 const ejsPlugin = {
   name: 'ejs',
   setup(build) {
     build.onLoad({ filter: /\.ejs$/ }, async ({ path }) => {
-      const ejs = await readFile(path, 'utf-8');
-      const template = compile(ejs, {
+      const ejsText = await readFile(path, 'utf-8');
+      const template = ejs.compile(ejsText, {
         filename: path,
         client: true,
         strict: true,
