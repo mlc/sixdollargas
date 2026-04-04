@@ -974,13 +974,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@js-joda/locale_en-us@npm:4.15.3":
-  version: 4.15.3
-  resolution: "@js-joda/locale_en-us@npm:4.15.3"
+"@js-joda/locale_en-us@npm:5.0.1":
+  version: 5.0.1
+  resolution: "@js-joda/locale_en-us@npm:5.0.1"
   peerDependencies:
-    "@js-joda/core": ">=3.2.0"
-    "@js-joda/timezone": ^2.3.0
-  checksum: 10c0/b18b8c8c18fc5067a5a95e51f0aea4832002ebff0706d7262a09175ee8ece9451eebac409d4916864252b26b5c3a048d1717e68d82785b4d9549163981ae5d85
+    "@js-joda/core": ">=5.7.0"
+    "@js-joda/locale": ">=5.0.1"
+    "@js-joda/timezone": ^2.23.0
+  checksum: 10c0/e743a0ec661fc2df0b9ed8d783c3243bdc0c73f023bd1f9876bc4635662774e8e9b03c19c52fe2830c00b179488fd10a3579be1d115674af2619d468e4d09ff1
   languageName: node
   linkType: hard
 
@@ -2107,7 +2108,7 @@ __metadata:
     "@aws-sdk/client-dynamodb": "npm:3.981.0"
     "@aws-sdk/client-s3": "npm:3.981.0"
     "@js-joda/core": "npm:5.7.0"
-    "@js-joda/locale_en-us": "npm:4.15.3"
+    "@js-joda/locale_en-us": "npm:5.0.1"
     "@js-joda/timezone": "npm:2.23.0"
     "@tsconfig/node24": "npm:24.0.4"
     "@types/aws-lambda": "npm:8.10.160"
