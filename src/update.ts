@@ -1,3 +1,4 @@
+import ejs from 'ejs';
 import { PutItemCommand } from '@aws-sdk/client-dynamodb';
 import {
   CopyObjectCommand,
@@ -41,15 +42,20 @@ interface FileDescription {
   ContentType: string;
 }
 
+const ejsOpts = {
+  strict: true,
+  async: true,
+} as const;
+
 const files: readonly FileDescription[] = [
   {
     Key: 'index.html',
-    transformer: index,
+    transformer: ejs.compile(index, ejsOpts),
     ContentType: 'application/xhtml+xml;charset=utf-8',
   },
   {
     Key: 'feed.atom',
-    transformer: feed,
+    transformer: ejs.compile(feed, ejsOpts),
     ContentType: 'application/atom+xml',
   },
   {

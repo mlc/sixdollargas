@@ -1,4 +1,4 @@
 declare module '*.ejs' {
-  const fn: import('ejs').AsyncClientFunction;
-  export default fn;
+  const template: string;
+  export default template;
 }
