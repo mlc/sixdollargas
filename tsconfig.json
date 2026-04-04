@@ -3,10 +3,10 @@
   "compilerOptions": {
     "sourceMap": true,
     "strict": true,
-    "esModuleInterop": false,
     "importHelpers": true,
     "module": "Node16",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "types": ["node"]
   },
   "exclude": ["node_modules", "dist"]
 }

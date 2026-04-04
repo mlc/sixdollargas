@@ -5,11 +5,12 @@ import type {
 } from 'aws-lambda';
 import { dynamo } from './aws';
 import { DateTimeFormatter, ZonedDateTime, ZoneId } from '@js-joda/core';
-// @ts-ignore
-import { Locale } from '@js-joda/locale_en-us';
+import { Locale } from '@js-joda/locale';
 
 import { TableName } from './config';
 import { sha256 } from './hash';
+
+import '@js-joda/locale_en-us';
 
 const httpDateFormatter = DateTimeFormatter.ofPattern(
   "eee, dd MMM yyyy HH:mm:ss 'GMT'"
