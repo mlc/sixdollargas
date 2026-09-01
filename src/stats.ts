@@ -40,11 +40,13 @@ const unmarshall = ({
 const getStats: APIGatewayProxyHandlerV2 =
   async (): Promise<APIGatewayProxyStructuredResultV2> => {
     const pages: Item[][] = [];
+    let capacity = 0;
 
     for await (const response of paginateScan(
       { client: dynamo },
-      { TableName }
+      { TableName, ReturnConsumedCapacity: 'TOTAL' }
     )) {
+      capacity += response.ConsumedCapacity?.CapacityUnits ?? 0;
       if (response.Items && response.Items.length > 0) {
         pages.push(response.Items.flatMap(unmarshall));
       }
@@ -61,6 +63,7 @@ const getStats: APIGatewayProxyHandlerV2 =
       'content-type': 'application/json',
       'cache-control': 'public',
       etag: `"${sha256(body)}"`,
+      'x-consumed-capacity': String(capacity),
     };
     if (maxDate) {
       const parsed = ZonedDateTime.parse(maxDate).withZoneSameInstant(
