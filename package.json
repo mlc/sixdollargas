@@ -28,7 +28,7 @@
     "@types/node": "24.12.4",
     "@types/sprintf-js": "1.1.4",
     "ejs": "5.0.2",
-    "esbuild": "0.28.0",
+    "esbuild": "0.28.1",
     "husky": "9.1.7",
     "lint-staged": "17.0.5",
     "prettier": "3.8.3",
