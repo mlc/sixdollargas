@@ -533,12 +533,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@js-joda/timezone@npm:2.25.2":
-  version: 2.25.2
-  resolution: "@js-joda/timezone@npm:2.25.2"
+"@js-joda/timezone@npm:3.2.1":
+  version: 3.2.1
+  resolution: "@js-joda/timezone@npm:3.2.1"
   peerDependencies:
     "@js-joda/core": ">=5.7.0"
-  checksum: 10c0/fcacd7c8ea65f233f6a53b9dc5820ead90b12c3d19334a9874dcc0eeb903772354d6bd18e6602dcaf0fa4dca24cafecb75666b0d068b37bb4f6addd4c6fc3ada
+  checksum: 10c0/0a13bb6056d1732153a391b1a0c3a8cb9f1a3395fd4c8a59cf3046a6008e902c3e5ad8f51e7289612f66e3d07e086e323f45c0b5120def2c32663d6506e7f6fd
   languageName: node
   linkType: hard
 
@@ -828,7 +828,7 @@ __metadata:
     "@js-joda/core": "npm:6.1.0"
     "@js-joda/locale": "npm:5.2.0"
     "@js-joda/locale_en-us": "npm:5.2.0"
-    "@js-joda/timezone": "npm:2.25.2"
+    "@js-joda/timezone": "npm:3.2.1"
     "@tsconfig/node24": "npm:24.0.5"
     "@types/aws-lambda": "npm:8.10.162"
     "@types/ejs": "npm:3.1.5"
