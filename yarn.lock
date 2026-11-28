@@ -495,19 +495,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@js-joda/core@npm:6.1.0":
-  version: 6.1.0
-  resolution: "@js-joda/core@npm:6.1.0"
-  checksum: 10c0/7713d867e08f3f57e368a38820fbdfebe848cb073cf405edfe2ad04c9fcf55d664b07ed331ffd775a4f192aa7888588a4718ca827e29d58c0be093eec1d6c40d
+"@js-joda/core@npm:6.3.2":
+  version: 6.3.2
+  resolution: "@js-joda/core@npm:6.3.2"
+  checksum: 10c0/6717d272c292e681d9090ac5694bbee1b24d6f43d21f5bab744a6cd17df90828e2a724d1295d8a6ae3e4aa92d3631fc7a2d6ae678819f6d64e8645a839194b1d
   languageName: node
   linkType: hard
 
-"@js-joda/locale@npm:5.2.0":
-  version: 5.2.0
-  resolution: "@js-joda/locale@npm:5.2.0"
+"@js-joda/locale@npm:6.0.2":
+  version: 6.0.2
+  resolution: "@js-joda/locale@npm:6.0.2"
   peerDependencies:
     "@js-joda/core": ">=6.0.0"
-    "@js-joda/timezone": ^2.25.0
+    "@js-joda/timezone": ^3.1.0
     cldr-data: "*"
     cldrjs: ^0.5.5
   peerDependenciesMeta:
@@ -515,21 +515,21 @@ __metadata:
       optional: true
     cldr-data:
       optional: true
-  checksum: 10c0/8bef1ece46041ecf9008e90a4f290f2f17663f812270ae6771dcc59b95c2ea98b1b37c1d5ab62eca58fa78bb2a819fcaae0a77e0d0ca8919ed89502fa2d722dc
+  checksum: 10c0/142b598ee1a017e59c42b88ce4a020210737827ad5d15c560671d32c445baa76033f6219b6df2617f6bd77d334c07f748e3ec964221740db4c2fd77de8ab400a
   languageName: node
   linkType: hard
 
-"@js-joda/locale_en-us@npm:5.2.0":
-  version: 5.2.0
-  resolution: "@js-joda/locale_en-us@npm:5.2.0"
+"@js-joda/locale_en-us@npm:6.0.0":
+  version: 6.0.0
+  resolution: "@js-joda/locale_en-us@npm:6.0.0"
   peerDependencies:
     "@js-joda/core": ">=6.0.0"
-    "@js-joda/locale": ">=5.2.0"
-    "@js-joda/timezone": ^2.25.0
+    "@js-joda/locale": ">=5.0.0"
+    "@js-joda/timezone": ^3.1.0
   peerDependenciesMeta:
     "@js-joda/timezone":
       optional: true
-  checksum: 10c0/4178fb9ede9128970ceca908ff0fd7b8adf2db1cc9d46c51d0e3a5ec24542290e5563f2544557352ddb86ea2fd30fb5df0e97a12f78244be029896652fe25762
+  checksum: 10c0/4341303c753bc54128b1b0faed26b50f6a0043793a353b214ef7311cb03e13caefa9785328dd8912f360831688576f8815815be4dc448d6a7b9f9040867cfb4d
   languageName: node
   linkType: hard
 
@@ -825,9 +825,9 @@ __metadata:
   dependencies:
     "@aws-sdk/client-dynamodb": "npm:3.1121.0"
     "@aws-sdk/client-s3": "npm:3.1121.0"
-    "@js-joda/core": "npm:6.1.0"
-    "@js-joda/locale": "npm:5.2.0"
-    "@js-joda/locale_en-us": "npm:5.2.0"
+    "@js-joda/core": "npm:6.3.2"
+    "@js-joda/locale": "npm:6.0.2"
+    "@js-joda/locale_en-us": "npm:6.0.0"
     "@js-joda/timezone": "npm:3.2.1"
     "@tsconfig/node24": "npm:24.0.5"
     "@types/aws-lambda": "npm:8.10.162"
