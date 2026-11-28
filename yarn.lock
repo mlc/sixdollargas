@@ -605,10 +605,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/node26@npm:26.0.0":
-  version: 26.0.0
-  resolution: "@tsconfig/node26@npm:26.0.0"
-  checksum: 10c0/ac63ed4711b2b809957e45a97524bff2960a9662292caad253ec5577eb1ea35d3793a8b85ba6d308c5d6b21c117c7ab81c65cdf409ca0f6891129b73f3d10a66
+"@tsconfig/node26@npm:26.0.2":
+  version: 26.0.2
+  resolution: "@tsconfig/node26@npm:26.0.2"
+  checksum: 10c0/8ffd2ad1a67cf804c553e82da6422c544d2d047eb6a40b9a0cd9066440291b1472da2aa53c3ae6957e4f7f3d8d0b181461918e078ac0a689271e8bfd10f94406
   languageName: node
   linkType: hard
 
@@ -829,7 +829,7 @@ __metadata:
     "@js-joda/locale": "npm:6.0.2"
     "@js-joda/locale_en-us": "npm:6.0.0"
     "@js-joda/timezone": "npm:3.2.1"
-    "@tsconfig/node26": "npm:26.0.0"
+    "@tsconfig/node26": "npm:26.0.2"
     "@types/aws-lambda": "npm:8.10.164"
     "@types/ejs": "npm:3.1.5"
     "@types/node": "npm:26.6.11"
